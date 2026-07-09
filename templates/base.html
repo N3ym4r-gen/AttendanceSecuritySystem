@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Attendance Security System</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <h1>Attendance Security System</h1>
+
+    <nav>
+
+        <a href="/">Home</a> |
+
+        <a href="/register">Register</a> |
+
+        <a href="/login">Student Login</a> |
+
+        <a href="/admin/login">Admin Login</a>
+
+    </nav>
+
+</header>
+
+<div class="container">
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+    {% for category, message in messages %}
+
+        <div class="flash {{ category }}">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+{% endwith %}
+
+{% block content %}
+{% endblock %}
+
+</div>
+
+</body>
+
+</html>

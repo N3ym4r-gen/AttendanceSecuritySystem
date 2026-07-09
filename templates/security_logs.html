@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Security Login Logs</h1>
+
+<hr>
+
+<table border="1" cellpadding="8">
+
+<tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>IP Address</th>
+    <th>Login Time</th>
+    <th>Status</th>
+</tr>
+
+{% for log in logs %}
+
+<tr>
+
+<td>{{ log.id }}</td>
+
+<td>{{ log.username }}</td>
+
+<td>{{ log.ip_address }}</td>
+
+<td>{{ log.login_time }}</td>
+
+<td>{{ log.status }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="{{ url_for('admin_dashboard') }}">
+    <button class="btn">
+        Back to Admin Dashboard
+    </button>
+</a>
+
+{% endblock %}

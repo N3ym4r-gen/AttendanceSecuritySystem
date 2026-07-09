@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Cybersecurity Incident Reports</h2>
+
+<table>
+
+<tr>
+
+<th>ID</th>
+
+<th>Type</th>
+
+<th>User</th>
+
+<th>IP</th>
+
+<th>Severity</th>
+
+<th>Status</th>
+
+<th>Detected</th>
+
+</tr>
+
+{% for incident in incidents %}
+
+<tr>
+
+<td>{{ incident.id }}</td>
+
+<td>{{ incident.incident_type }}</td>
+
+<td>{{ incident.username }}</td>
+
+<td>{{ incident.ip_address }}</td>
+
+<td>{{ incident.severity }}</td>
+
+<td>{{ incident.status }}</td>
+
+<td>{{ incident.detected_time }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

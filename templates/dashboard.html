@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard">
+
+<h2>Student Dashboard</h2>
+
+<hr>
+
+<h3>Welcome {{ student.fullname }}</h3>
+
+<p><b>Matric Number:</b> {{ student.matric_no }}</p>
+
+<p><b>Department:</b> {{ student.department }}</p>
+
+<p><b>Level:</b> {{ student.level }}</p>
+
+<hr>
+
+<h2>Attendance Statistics</h2>
+
+<div style="display:flex; gap:20px; margin-bottom:30px;">
+
+<div style="border:1px solid #ccc; padding:20px; width:180px; text-align:center;">
+<h3>Present Days</h3>
+<h1>{{ present_days }}</h1>
+</div>
+
+<div style="border:1px solid #ccc; padding:20px; width:180px; text-align:center;">
+<h3>Late Days</h3>
+<h1>{{ late_days }}</h1>
+</div>
+
+<div style="border:1px solid #ccc; padding:20px; width:180px; text-align:center;">
+<h3>Total Days</h3>
+<h1>{{ total_days }}</h1>
+</div>
+
+</div>
+
+<a href="/signin">
+<button class="btn">
+Sign In
+</button>
+</a>
+
+<a href="/signout">
+<button class="btn">
+Sign Out
+</button>
+</a>
+
+<a href="/logout">
+<button class="btn btn-danger">
+Logout
+</button>
+</a>
+
+<hr>
+
+<h2>Attendance History</h2>
+
+<table border="1" cellpadding="10">
+
+<tr>
+
+<th>Date</th>
+<th>Sign In</th>
+<th>Sign Out</th>
+<th>Status</th>
+
+</tr>
+
+{% for record in attendance %}
+
+<tr>
+
+<td>{{ record.date }}</td>
+
+<td>{{ record.sign_in }}</td>
+
+<td>{{ record.sign_out or "-" }}</td>
+
+<td>{{ record.status }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+{% endblock %}

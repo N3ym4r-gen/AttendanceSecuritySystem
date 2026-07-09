@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <h2>Administrator Dashboard</h2>
+
+    <hr>
+
+    <div class="stats">
+
+        <div class="card">
+            <h3>Total Students</h3>
+            <h1>{{ total_students }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>Present Today</h3>
+            <h1>{{ present_today }}</h1>
+        </div>
+
+        <div class="card">
+            <h3>Late Today</h3>
+            <h1>{{ late_today }}</h1>
+        </div>
+
+    </div>
+
+    <hr>
+
+<a href="{{ url_for('incident_dashboard') }}">
+    <button class="btn">
+        🛡 View Security Incidents
+    </button>
+</a>
+
+<a href="{{ url_for('security_logs') }}">
+    <button class="btn">
+        📜 View Login Logs
+    </button>
+</a>
+
+<a href="{{ url_for('admin_logout') }}">
+    <button class="btn btn-danger">
+        Logout
+    </button>
+</a>
+
+<hr>
+
+<h2>Attendance Records</h2>
+
+    <table>
+
+        <tr>
+            <th>Name</th>
+            <th>Matric No</th>
+            <th>Date</th>
+            <th>Sign In</th>
+            <th>Sign Out</th>
+            <th>Status</th>
+        </tr>
+
+        {% for record in attendance %}
+
+        <tr>
+
+            <td>{{ record.student.fullname }}</td>
+
+            <td>{{ record.student.matric_no }}</td>
+
+            <td>{{ record.date }}</td>
+
+            <td>{{ record.sign_in }}</td>
+
+            <td>{{ record.sign_out or "-" }}</td>
+
+            <td>{{ record.status }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <br>
+
+    <a href="{{ url_for('admin_logout') }}">
+        <button class="btn btn-danger">
+            Logout
+        </button>
+    </a>
+
+</div>
+
+{% endblock %}

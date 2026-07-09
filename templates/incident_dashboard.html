@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Cybersecurity Incident Dashboard</h1>
+
+<hr>
+
+<h3>Total Incidents: {{ total_incidents }}</h3>
+
+<h3>Open Incidents: {{ open_incidents }}</h3>
+
+<h3>Closed Incidents: {{ closed_incidents }}</h3>
+
+<h3>High Severity: {{ high_incidents }}</h3>
+
+<hr>
+
+<table border="1" cellpadding="8">
+
+<tr>
+
+<th>ID</th>
+<th>Incident No</th>
+<th>Type</th>
+<th>Username</th>
+<th>IP Address</th>
+<th>Severity</th>
+<th>Status</th>
+<th>Detected Time</th>
+<th>Action</th>
+
+</tr>
+
+{% for incident in incidents %}
+
+<tr>
+
+<td>{{ incident.id }}</td>
+
+<td>{{ incident.incident_no }}</td>
+
+<td>{{ incident.incident_type }}</td>
+
+<td>{{ incident.username }}</td>
+
+<td>{{ incident.ip_address }}</td>
+
+<td>{{ incident.severity }}</td>
+
+<td>{{ incident.status }}</td>
+
+<td>{{ incident.detected_time }}</td>
+
+<td>
+
+{% if incident.status == "Open" %}
+
+<a href="{{ url_for('close_incident', id=incident.id) }}">
+<button class="btn">
+Close Incident
+</button>
+</a>
+
+{% else %}
+
+Closed
+
+{% endif %}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="{{ url_for('admin_dashboard') }}">
+<button class="btn">
+Back to Dashboard
+</button>
+</a>
+
+{% endblock %}

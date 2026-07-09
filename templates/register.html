@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Register Student</h2>
+
+<form method="POST">
+
+    {{ form.hidden_tag() }}
+
+    <p>
+        {{ form.fullname.label }}<br>
+        {{ form.fullname(size=40) }}
+    </p>
+
+    <p>
+        {{ form.matric_no.label }}<br>
+        {{ form.matric_no(size=40) }}
+    </p>
+
+    <p>
+        {{ form.department.label }}<br>
+        {{ form.department(size=40) }}
+    </p>
+
+    <p>
+        {{ form.level.label }}<br>
+        {{ form.level(size=40) }}
+    </p>
+
+    <p>
+        {{ form.email.label }}<br>
+        {{ form.email(size=40) }}
+    </p>
+
+    <p>
+        {{ form.password.label }}<br>
+        {{ form.password(size=40) }}
+    </p>
+
+    <p>
+        {{ form.submit() }}
+    </p>
+
+</form>
+
+{% endblock %}
