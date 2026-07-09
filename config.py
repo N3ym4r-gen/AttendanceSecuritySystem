@@ -2,21 +2,22 @@ import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+INSTANCE_DIR = os.path.join(BASE_DIR, "instance")
+
+os.makedirs(INSTANCE_DIR, exist_ok=True)
+
 
 class Config:
 
-    # Read the secret key from the environment on Render.
-    # Fall back to a development key when running locally.
     SECRET_KEY = os.environ.get(
         "SECRET_KEY",
         "attendance-secret-key"
     )
 
-    SQLALCHEMY_DATABASE_URI = (
-        "sqlite:///" +
-        os.path.join(BASE_DIR, "instance", "attendance.db")
-    )
+    SQLALCHEMY_DATABASE_URI = \
+        "sqlite:///" + os.path.join(
+            INSTANCE_DIR,
+            "attendance.db"
+        )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    WTF_CSRF_ENABLED = True
