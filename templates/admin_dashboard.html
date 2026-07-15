@@ -2,79 +2,291 @@
 
 {% block content %}
 
-<div class="dashboard">
+<div class="container mt-4">
 
-    <h2>Administrator Dashboard</h2>
+    <h2 class="mb-4">
+        Attendance Security Dashboard
+    </h2>
 
-    <hr>
+    <!-- Attendance Statistics -->
 
-    <div class="stats">
+    <div class="row">
 
-        <div class="card">
-            <h3>Total Students</h3>
-            <h1>{{ total_students }}</h1>
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-white bg-primary">
+
+                <div class="card-body">
+
+                    <h5>Total Students</h5>
+
+                    <h2>{{ total_students }}</h2>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>Present Today</h3>
-            <h1>{{ present_today }}</h1>
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-white bg-success">
+
+                <div class="card-body">
+
+                    <h5>Present Today</h5>
+
+                    <h2>{{ present_today }}</h2>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="card">
-            <h3>Late Today</h3>
-            <h1>{{ late_today }}</h1>
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-white bg-warning">
+
+                <div class="card-body">
+
+                    <h5>Late Today</h5>
+
+                    <h2>{{ late_today }}</h2>
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
     <hr>
 
-<a href="{{ url_for('incident_dashboard') }}">
-    <button class="btn">
-        🛡 View Security Incidents
-    </button>
-</a>
+    <!-- Security Statistics -->
 
-<a href="{{ url_for('security_logs') }}">
-    <button class="btn">
-        📜 View Login Logs
-    </button>
-</a>
+    <div class="row">
 
-<a href="{{ url_for('admin_logout') }}">
-    <button class="btn btn-danger">
-        Logout
-    </button>
-</a>
+        <div class="col-md-4 mb-3">
 
-<hr>
+            <div class="card text-white bg-danger">
 
-<h2>Attendance Records</h2>
+                <div class="card-body">
 
-    <table>
+                    <h5>Total Incidents</h5>
+
+                    <h2>{{ total_incidents }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-white bg-dark">
+
+                <div class="card-body">
+
+                    <h5>Open Incidents</h5>
+
+                    <h2>{{ open_incidents }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-white bg-secondary">
+
+                <div class="card-body">
+
+                    <h5>SQL Injection</h5>
+
+                    <h2>{{ sql_injections }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card border-danger">
+
+                <div class="card-body">
+
+                    <h5>XSS Attacks</h5>
+
+                    <h3>{{ xss_attacks }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card border-danger">
+
+                <div class="card-body">
+
+                    <h5>Command Injection</h5>
+
+                    <h3>{{ command_injections }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card border-danger">
+
+                <div class="card-body">
+
+                    <h5>Directory Traversal</h5>
+
+                    <h3>{{ directory_traversals }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card border-warning">
+
+                <div class="card-body">
+
+                    <h5>Scanner Detection</h5>
+
+                    <h3>{{ scanners }}</h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h3>Recent Security Incidents</h3>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
 
         <tr>
-            <th>Name</th>
-            <th>Matric No</th>
-            <th>Date</th>
-            <th>Sign In</th>
-            <th>Sign Out</th>
+
+            <th>ID</th>
+
+            <th>Incident</th>
+
+            <th>User</th>
+
+            <th>IP</th>
+
+            <th>Severity</th>
+
             <th>Status</th>
+
+            <th>Time</th>
+
         </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for incident in recent_incidents %}
+
+        <tr>
+
+            <td>{{ incident.id }}</td>
+
+            <td>{{ incident.incident_type }}</td>
+
+            <td>{{ incident.username }}</td>
+
+            <td>{{ incident.ip_address }}</td>
+
+            <td>{{ incident.severity }}</td>
+
+            <td>{{ incident.status }}</td>
+
+            <td>{{ incident.detected_time }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <hr>
+
+    <h3>Attendance Records</h3>
+
+    <table class="table table-striped">
+
+        <thead class="table-dark">
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Student</th>
+
+            <th>Date</th>
+
+            <th>Sign In</th>
+
+            <th>Sign Out</th>
+
+            <th>Status</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
 
         {% for record in attendance %}
 
         <tr>
 
-            <td>{{ record.student.fullname }}</td>
+            <td>{{ record.id }}</td>
 
-            <td>{{ record.student.matric_no }}</td>
+            <td>{{ record.student.fullname }}</td>
 
             <td>{{ record.date }}</td>
 
             <td>{{ record.sign_in }}</td>
 
-            <td>{{ record.sign_out or "-" }}</td>
+            <td>{{ record.sign_out }}</td>
 
             <td>{{ record.status }}</td>
 
@@ -82,15 +294,9 @@
 
         {% endfor %}
 
+        </tbody>
+
     </table>
-
-    <br>
-
-    <a href="{{ url_for('admin_logout') }}">
-        <button class="btn btn-danger">
-            Logout
-        </button>
-    </a>
 
 </div>
 

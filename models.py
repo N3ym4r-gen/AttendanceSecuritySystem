@@ -93,3 +93,25 @@ class Incident(db.Model):
     detected_time = db.Column(db.String(100))
 
     status = db.Column(db.String(30))
+    
+class BlockedIP(db.Model):
+
+    __tablename__ = "blocked_ip"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    ip_address = db.Column(
+        db.String(100),
+        unique=True,
+        nullable=False
+    )
+
+    attack_count = db.Column(
+        db.Integer,
+        default=1
+    )
+
+    blocked = db.Column(
+        db.Boolean,
+        default=False
+    )

@@ -8,30 +8,56 @@ app.config.from_object(Config)
 
 db.init_app(app)
 
-# Import models after db is initialized
+# ===========================
+# Import models
+# ===========================
 import models
 from models import Admin
 
-# Import routes after app is created
+# ===========================
+# Import security middleware
+# ===========================
+from middleware import detect_attack
+
+# Inspect every incoming request
+@app.before_request
+def before_request():
+    detect_attack()
+
+# ===========================
+# Import routes
+# ===========================
 from routes import *
 
-# Create database tables and default admin
+# ===========================
+# Create database tables
+# ===========================
 with app.app_context():
+
     db.create_all()
 
-    # Create default administrator if it doesn't exist
+    # Create default administrator
     if not Admin.query.filter_by(username="admin").first():
+
         admin = Admin(
             username="admin",
             password=generate_password_hash("admin123")
         )
+
         db.session.add(admin)
         db.session.commit()
+
         print("✓ Default administrator account created.")
+
     else:
+
         print("✓ Administrator account already exists.")
 
+# ===========================
+# Run application
+# ===========================
 if __name__ == "__main__":
+
     app.run(
         host="0.0.0.0",
         port=5000,

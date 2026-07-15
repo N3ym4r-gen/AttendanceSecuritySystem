@@ -30,6 +30,8 @@ from models import (
     LoginLog,
     Incident
 )
+from detector import detect_sql
+from logger import log_incident
 
 from security_engine import check_brute_force
 
@@ -331,6 +333,9 @@ def admin_dashboard():
 
     today = datetime.now().strftime("%Y-%m-%d")
 
+    # -------------------------
+    # Attendance Statistics
+    # -------------------------
     total_students = Student.query.count()
 
     present_today = Attendance.query.filter_by(
@@ -347,14 +352,55 @@ def admin_dashboard():
         Attendance.id.desc()
     ).all()
 
+    # -------------------------
+    # Security Statistics
+    # -------------------------
+    total_incidents = Incident.query.count()
+
+    open_incidents = Incident.query.filter_by(
+        status="Open"
+    ).count()
+
+    sql_injections = Incident.query.filter_by(
+        incident_type="SQL Injection"
+    ).count()
+
+    xss_attacks = Incident.query.filter_by(
+        incident_type="Cross Site Scripting"
+    ).count()
+
+    command_injections = Incident.query.filter_by(
+        incident_type="Command Injection"
+    ).count()
+
+    directory_traversals = Incident.query.filter_by(
+        incident_type="Directory Traversal"
+    ).count()
+
+    scanners = Incident.query.filter_by(
+        incident_type="Scanner Detection"
+    ).count()
+
+    recent_incidents = Incident.query.order_by(
+        Incident.id.desc()
+    ).limit(10).all()
+
     return render_template(
         "admin_dashboard.html",
         total_students=total_students,
         present_today=present_today,
         late_today=late_today,
-        attendance=attendance
-    )
+        attendance=attendance,
 
+        total_incidents=total_incidents,
+        open_incidents=open_incidents,
+        sql_injections=sql_injections,
+        xss_attacks=xss_attacks,
+        command_injections=command_injections,
+        directory_traversals=directory_traversals,
+        scanners=scanners,
+        recent_incidents=recent_incidents
+    )
 
 # ==========================================
 # INCIDENT DASHBOARD
@@ -445,3 +491,8 @@ def admin_logout():
     flash("Administrator Logged Out!", "success")
 
     return redirect(url_for("admin_login"))
+
+@app.errorhandler(403)
+def forbidden(error):
+
+    return render_template("403.html"), 403
